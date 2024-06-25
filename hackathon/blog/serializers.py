@@ -1,22 +1,12 @@
 from rest_framework import serializers
-from .models import Post, Comment, Bookmark, Category, PostCategory
+from .models import Tag, Post, Comment, Profile, Bookmark
 
-class CategorySerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
-        model = get_user_model()
-        fields = '__all__'
-
-class PostCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PostCategory
+        model = Tag
         fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
-    categories = CategorySerializer(many=True, read_only=True)
-    category_ids = serializers.PrimaryKeyRelatedField(
-        many=True, write_only=True, queryset=Category.objects.all(), source='categories'
-    )
-
     class Meta:
         model = Post
         fields = '__all__'
@@ -24,6 +14,11 @@ class PostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
+        fields = '__all__'
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
         fields = '__all__'
 
 class BookmarkSerializer(serializers.ModelSerializer):
