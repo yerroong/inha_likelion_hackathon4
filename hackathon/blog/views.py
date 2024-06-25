@@ -6,23 +6,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 
-from .models import Tag, Post, Comment, Profile, Bookmark
+from .models import Tag, Post, Comment, Profile, Bookmark,Token
 from .serializers import TagSerializer, PostSerializer, CommentSerializer, ProfileSerializer, BookmarkSerializer
 
 class RegisterUser(APIView):
     def post(self, request):
-        user_name = request.data['user_name']
+        username = request.data['username']
         password = request.data['password']
         email = request.data['email']
-        user = User.objects.create_user(username=user_name, password=password, email=email)
+        user = User.objects.create_user(username=username, password=password, email=email)
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key}, status=status.HTTP_201_CREATED)
 
 class LoginUser(APIView):
     def post(self, request):
-        user_name = request.data['user_name']
+        username = request.data['username']
         password = request.data['password']
-        user = authenticate(request, username=user_name, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
             return Response({'token': token.key}, status=status.HTTP_200_OK)
