@@ -10,6 +10,7 @@ const SidebarContainer = styled.div`
 `;
 
 const WidgetWrap = styled.div`
+    position: relative;
     margin-bottom: 20px;
     background-color: var(--preset--color--base-2);
     box-shadow: 0px 12px 16px 0 #888;
@@ -17,7 +18,7 @@ const WidgetWrap = styled.div`
     padding: 20px;
     width: 300px;
 
-    &.user-profile-widget {
+    &.my-profile-widget {
         height: 350px;
     }
 `;
@@ -39,30 +40,34 @@ const UserTitle = styled.div`
 `;
 
 const UserName = styled.h2`
-  font-size: 18px;
-  margin-bottom: 10px;
+    font-size: 18px;
+    margin: unset;
 `;
 
 const UserEmail = styled.p`
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 10px;
+    font-size: 14px;
+    color: #777;
+    margin: unset;
+    margin-top: 5px;
 `;
 
 const UserStats = styled.p`
-  font-size: 14px;
-  margin-bottom: 5px;
+    font-size: 18px;
+    margin: unset;
+    margin-top: 30px;
 `;
 
-const Button = styled.button`
-  padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  &:hover {
-    background-color: #e0e0e0;
-  }
+const PostButton = styled.button`
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(-20px, -20px);
 `;
 
 const PostList = styled.div`
@@ -83,7 +88,7 @@ const Sidebar = () => {
 
   return (
     <SidebarContainer>
-      <WidgetWrap className='user-profile-widget'>
+      <WidgetWrap className='my-profile-widget'>
         <UserProfile>
             <UserProfileImg />
             <UserTitle>
@@ -93,9 +98,9 @@ const Sidebar = () => {
         </UserProfile>
         <UserStats>게시글 작성: 20회</UserStats>
         <UserStats>댓글 작성: 20회</UserStats>
-        <Button>글쓰기</Button>
+        <PostButton>글쓰기</PostButton>
       </WidgetWrap>
-      <WidgetWrap>
+      <WidgetWrap className='my-posts-widget'>
         <h3>내가 작성한 글</h3>
         {myPosts.map(post => (
           <PostItem key={post.id}>{post.title} <br /><span>{post.date}</span></PostItem>
