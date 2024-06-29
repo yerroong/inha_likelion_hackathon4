@@ -73,7 +73,7 @@ const Header = () => {
   const location = useLocation();
   const path = location.pathname;
   return (
-    <HeaderContainer className={path || "home"}>
+    <HeaderContainer className={path || "main"}>
       <Logo>
         <img src="logo.png" alt="Logo" />
         <span>LOGO</span>
