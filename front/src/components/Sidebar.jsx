@@ -21,6 +21,14 @@ const WidgetWrap = styled.div`
     &.my-profile-widget {
         height: 350px;
     }
+
+    &.my-posts-widget {
+        min-height: 450px;
+
+        & h3 {
+            font-size: 18px;
+        }
+    }
 `;
 
 const UserProfile = styled.div`
@@ -76,7 +84,11 @@ const PostList = styled.div`
 
 const PostItem = styled.div`
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 15px;
+  & span {
+    font-size: 12px;
+    color: #5B5858;
+  }
 `;
 
 const Sidebar = () => {
