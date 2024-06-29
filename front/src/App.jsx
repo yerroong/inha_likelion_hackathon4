@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import MainPage from './pages/Mainpage';
+import Search from './pages/Search';
 
 const App = () => {
   return (
@@ -10,7 +11,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<MainPage />}  />
-          <Route path="/search" />
+          <Route path="/search" element={<Search />}  />
           <Route path="/posting" />
         </Routes>
       </main>
