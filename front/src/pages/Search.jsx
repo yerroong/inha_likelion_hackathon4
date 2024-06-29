@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import PostDetail from './PostDetail';
+import CommentDetail from './CommentDetail';
 
 const Container = styled.div`
   display: flex;

@@ -11,7 +11,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<MainPage />}  />
-          <Route path="/search" element={<Search />}  />
+          <Route path="/search/*" element={<Search />} />
           <Route path="/posting" />
         </Routes>
       </main>
