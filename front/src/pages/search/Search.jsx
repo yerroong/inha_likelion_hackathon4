@@ -7,14 +7,15 @@ import Sidebar from '../../components/Sidebar';
 
 const Container = styled.div`
   display: flex;
-  padding: 20px;
   max-width: 1200px;
   margin: auto;
+  margin-top: 40px;
   gap: 60px;
 `;
 
 const MainContent = styled.div`
   display: flex;
+  padding: 0 20px;
   flex-direction: column;
   align-items: center;
   flex: 1;

@@ -5,7 +5,7 @@ import '../style.css';
 const SidebarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 0 20px;
     border-radius: 10px;
 `;
 
