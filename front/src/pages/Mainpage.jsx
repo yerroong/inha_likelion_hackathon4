@@ -1,28 +1,79 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-// import Header from './Header';
-//현재 느낌만 냄 크게 수정해야함.
 
-const HomePageContainer = styled.div`
-  text-align: center;
+const MContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 20px;
+  margin-left: 15%;
 `;
 
-const Title = styled.h1`
-  font-size: 2em;
+const ContentContainer = styled.div`
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
 `;
 
+const TitleText = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.h1`
+  font-size: 2.2em;
+  margin: 0;
+  font-weight: bold;
+`;
+
 const Subtitle = styled.p`
-  font-size: 1.2em;
+  font-size: 1em;
   margin-bottom: 40px;
+  color: #8A929B;
+`;
+
+const TitleImage = styled.img`
+  width: 188px;
+  height: 134px;
+  margin-left: 10px;
+`;
+
+const PostsContainerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1000px; /* Adjust as needed */
+  margin: 0 auto; /* Center horizontally */
 `;
 
 const PostsContainer = styled.div`
-  margin: 0 auto;
-  max-width: 600px;
-  text-align: left;
+  width: 1000px;
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: #FBFDFF; /* Background color */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+`;
+
+const Post = styled.h2`
+  text-decoration: underline;
+  font-size: 22px;
+`;
+
+const PostsHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
 `;
 
 const PostList = styled.ul`
@@ -31,7 +82,7 @@ const PostList = styled.ul`
 
 const PostItem = styled.li`
   list-style-type: none;
-  border: 1px solid #ddd;
+  border: 1px solid #e9e9e9;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -56,6 +107,7 @@ const PostDescription = styled.p`
 
 const MoreButtonContainer = styled.div`
   margin-top: 20px;
+  text-align: center;
 `;
 
 const MoreButton = styled.button`
@@ -72,7 +124,21 @@ const MoreButton = styled.button`
   }
 `;
 
-const HomePage = () => {
+const SortButton = styled.button`
+  padding: 6px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #B5B5B4;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #ddd;
+  }
+`;
+
+const MainPage = () => {
   const navigate = useNavigate();
 
   const handleFindMoreClick = () => {
@@ -80,36 +146,48 @@ const HomePage = () => {
   };
 
   return (
-    <HomePageContainer>
-      {/* <Header /> */}
-      <Title>쉽고 편리한 코딩 공부, 함께 시작해보세요.</Title>
-      <Subtitle>
-        백준 문제를 기록하고 함께 공유할 수 있어요!<br />
-        내가 필요한 문제를 찾고 저장할 수도 있고 반응을 추가할 수도 있어요.
-      </Subtitle>
-      <PostsContainer>
-        <h2>오늘의 글</h2>
-        <PostList>
-          {/* 여기에 실제 포스트 데이터를 삽입 */}
-          <PostItem>
-            <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
-              <PostTitle>[백준 알고리즘 1002번] 터렛 C언어 - 나그네의 발자취 - 티스토리</PostTitle>
-            </PostLink>
-            <PostDescription>2020.4.7 - 문제와 테스트 케이스</PostDescription>
-          </PostItem>
-          <PostItem>
-            <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
-              <PostTitle>[C] 백준 1002번 터렛 - 초보 개발자의 이야기, 리하트 - 티스토리</PostTitle>
-            </PostLink>
-            <PostDescription>2020.1.3 - 터렛 각 테스트 케이스</PostDescription>
-          </PostItem>
-        </PostList>
-      </PostsContainer>
-      <MoreButtonContainer>
-        <MoreButton onClick={handleFindMoreClick}>더 많은 글 찾으러가기</MoreButton>
-      </MoreButtonContainer>
-    </HomePageContainer>
+    <MContainer>
+      <ContentContainer>
+        <TitleContainer>
+          <TitleText>
+            <Title>쉽고 편리한 코딩 공부,</Title>
+            <Title style={{ marginTop: '10px' }}>함께 시작해보세요.</Title>
+          </TitleText>
+          <TitleImage src="mainpage.png" alt="/<>" />
+        </TitleContainer>
+        <Subtitle>
+          백준 문제를 기록하고 함께 공유할 수 있어요!<br />
+          내가 필요한 문제를 찾고 저장할 수도 있고 반응을 추가할 수도 있어요.
+        </Subtitle>
+        <PostsContainerWrapper>
+          <PostsContainer>
+            <PostsHeader>
+              <Post>오늘의 글</Post>
+              <SortButton>추천순 ▼</SortButton>
+            </PostsHeader>
+            {/* 일단 예시임 */}
+            <PostList> 
+              <PostItem>
+                <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
+                  <PostTitle>[백준 알고리즘 1002번] 터렛 C언어 - 나그네의 발자취 - 티스토리</PostTitle>
+                </PostLink>
+                <PostDescription>2020.4.7 - 문제와 테스트 케이스</PostDescription>
+              </PostItem>
+              <PostItem>
+                <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
+                  <PostTitle>[C] 백준 1002번 터렛 - 초보 개발자의 이야기, 리하트 - 티스토리</PostTitle>
+                </PostLink>
+                <PostDescription>2020.1.3 - 터렛 각 테스트 케이스</PostDescription>
+              </PostItem>
+            </PostList>
+          </PostsContainer>
+          <MoreButtonContainer>
+            <MoreButton onClick={handleFindMoreClick}>더 많은 글 찾으러가기</MoreButton>
+          </MoreButtonContainer>
+        </PostsContainerWrapper>
+      </ContentContainer>
+    </MContainer>
   );
 };
 
-export default HomePage;
+export default MainPage;
