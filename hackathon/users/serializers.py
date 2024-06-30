@@ -7,14 +7,14 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'user_id','user_email', 'password', 'user_name')
+        fields = ('id','email', 'password', 'name')
 
 # 패스워드가 필요없는 다른 테이블에서 사용할 용도
 class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'user_id','user_email', 'user_name')
+        fields = ('id','email', 'name')
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
