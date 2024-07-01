@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import MainPage from './pages/Mainpage';
+import Posting from './pages/Posting';
 import Search from './pages/search/Search';
-import Posting from './pages/Posting'
+import MyPage from './pages/mypage/Mypage';
+
 
 const App = () => {
   return (
@@ -15,6 +17,7 @@ const App = () => {
           <Route path="/posting" element={<Posting />}  />
           <Route path="/search/*" element={<Search />} />
           <Route path="/posting" />
+          <Route path="/mypage" element={<MyPage/>} />
         </Routes>
       </main>
     </Router>
