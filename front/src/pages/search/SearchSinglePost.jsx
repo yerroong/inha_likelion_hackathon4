@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -117,6 +119,13 @@ const CommentButtonWrap = styled.div`
 `;
 
 const SearchSinglePost = () => {
+  const { postId } = useParams();
+
+  const navigate = useNavigate();
+
+  const handleCommentClick = () => {
+    navigate(`/search/post/${postId}/comments`); // 적절한 postId와 commentId로 수정하세요.
+  };
 
   return (
     <>
@@ -146,7 +155,7 @@ const SearchSinglePost = () => {
             <img alt='like btn icon' src='/like-empty.png'/>
             <span>1,000</span>
           </LikeWrap>
-          <CommentButtonWrap>
+          <CommentButtonWrap onClick={handleCommentClick}>
             <img alt='comment btn icon' src='/comment.png'/>
             <span>10</span>
           </CommentButtonWrap>

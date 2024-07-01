@@ -253,7 +253,7 @@ const Search = () => {
       <Routes>
         <Route path="/" element={<SearchResults />} />
         <Route path="post/:postId" element={<SearchSinglePost />} />
-        <Route path="post/:postId/comment/:commentId" element={<SearchPostComment />} />
+        <Route path="post/:postId/comments" element={<SearchPostComment />} />
       </Routes>
     </Container>
   );
