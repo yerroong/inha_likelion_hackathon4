@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import MainPage from './pages/Mainpage';
 import Search from './pages/search/Search';
-import MyPage from './pages/Mypage';
+import MyPage from './pages/mypage/Mypage';
+
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
           <Route path="/" element={<MainPage />}  />
           <Route path="/search/*" element={<Search />} />
           <Route path="/posting" />
-          <Route path="/mypage" element={<MyPage/>}></Route>
+          <Route path="/mypage" element={<MyPage/>} />
         </Routes>
       </main>
     </Router>
