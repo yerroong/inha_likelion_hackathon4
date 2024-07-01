@@ -94,6 +94,7 @@ const PostcontrolBoxInner = styled.div`
     display: flex;
     max-width: 1200px;
     padding: 10px 20px;
+    gap: 40px;
 `;
 
 const LikeWrap = styled.div`
@@ -107,7 +108,13 @@ const LikeWrap = styled.div`
 `;
 
 const CommentButtonWrap = styled.div`
-  
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & img {
+      width: 25px;
+      height: 25px;
+    }
 `;
 
 const SearchSinglePost = () => {
@@ -142,7 +149,8 @@ const SearchSinglePost = () => {
             <span>1,000</span>
           </LikeWrap>
           <CommentButtonWrap>
-
+            <img src='/comment.png'/>
+            <span>10</span>
           </CommentButtonWrap>
         </PostcontrolBoxInner>
       </PostControlBox>
