@@ -138,18 +138,18 @@ const SearchSinglePost = () => {
           <p>입력한 내용~~~~~~~~~~~~~~~~~~~~~~~~</p>
         </PostContent>
         <Attachment>
-          <img src='/attach.png'/>
+          <img alt='attachment icon' src='/attach.png'/>
           <p>파일첨부</p>
         </Attachment>
       </Container>
       <PostControlBox>
         <PostcontrolBoxInner>
           <LikeWrap>
-            <img src='/like-empty.png'/>
+            <img alt='like btn icon' src='/like-empty.png'/>
             <span>1,000</span>
           </LikeWrap>
           <CommentButtonWrap>
-            <img src='/comment.png'/>
+            <img alt='comment btn icon' src='/comment.png'/>
             <span>10</span>
           </CommentButtonWrap>
         </PostcontrolBoxInner>
