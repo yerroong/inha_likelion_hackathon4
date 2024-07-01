@@ -79,7 +79,6 @@ const Attachment = styled.div`
 
 const PostControlBox = styled.div`
     margin-top: 20px;
-    padding: 20px;
     background-color: #F5FDFF;
     width: 100%;
     box-shadow: 0px 12px 16px 0 #888;
@@ -88,6 +87,27 @@ const PostControlBox = styled.div`
     left: 0;
     bottom: 0;
     border-top: 1px solid var(--preset--color--contrast-2);
+    text-align: -webkit-center;
+`;
+
+const PostcontrolBoxInner = styled.div`
+    display: flex;
+    max-width: 1200px;
+    padding: 10px 20px;
+`;
+
+const LikeWrap = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & img {
+      width: 20px;
+      height: 20px;
+    }
+`;
+
+const CommentButtonWrap = styled.div`
+  
 `;
 
 const SearchSinglePost = () => {
@@ -116,7 +136,15 @@ const SearchSinglePost = () => {
         </Attachment>
       </Container>
       <PostControlBox>
+        <PostcontrolBoxInner>
+          <LikeWrap>
+            <img src='/like-empty.png'/>
+            <span>1,000</span>
+          </LikeWrap>
+          <CommentButtonWrap>
 
+          </CommentButtonWrap>
+        </PostcontrolBoxInner>
       </PostControlBox>
     </>
   );
