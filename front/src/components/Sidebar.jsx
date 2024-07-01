@@ -114,9 +114,11 @@ const Sidebar = () => {
       </WidgetWrap>
       <WidgetWrap className='my-posts-widget'>
         <h3>내가 작성한 글</h3>
-        {myPosts.map(post => (
-          <PostItem key={post.id}>{post.title} <br /><span>{post.date}</span></PostItem>
-        ))}
+        <PostList>
+            {myPosts.map(post => (
+            <PostItem key={post.id}>{post.title} <br /><span>{post.date}</span></PostItem>
+            ))}
+        </PostList>
       </WidgetWrap>
     </SidebarContainer>
   );

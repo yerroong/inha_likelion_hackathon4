@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchSinglePost from './SearchSinglePost';
@@ -6,10 +6,13 @@ import SearchPostComment from './SearchPostComment';
 import Sidebar from '../../components/Sidebar';
 
 const Container = styled.div`
-  display: flex;
   max-width: 1200px;
   margin: auto;
   margin-top: 40px;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
   gap: 60px;
 `;
 
@@ -48,6 +51,8 @@ const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px 0 0 5px;
+  height: 40px;
+  box-sizing: border-box;
 `;
 
 const Button = styled.button`
@@ -62,15 +67,56 @@ const Button = styled.button`
   }
 `;
 
-const FilterButton = styled.button`
-  padding: 10px 20px;
+const FilterButton = styled.div`
+  position: relative;
+`;
+
+const FilterButtonStyled = styled.button`
+  width: 100px;
+  height: 40px;
+  border: 1px solid #C4C4C4;
+  border-radius: 5px;
+  padding: 12px 14px;
+  font-size: 12px;
+  background-size: 12px 8px;
+  cursor: pointer;
+  background-color: #fff;
+  &.click {
+    background-color: #e0e0e0;
+  }
+`;
+
+const FilterList = styled.ul`
+  margin-top: 10px;
+  background-color: #fff;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f5f5f5;
-  cursor: pointer;
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  box-sizing: border-box;
+`;
 
+const FilterListItem = styled.li`
+  width: 100%;
+`;
+
+const FilterListItemButton = styled.button`
+  display: block;
+  width: 100%;
+  background-color: unset;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
   &:hover {
-    background-color: #e0e0e0;
+    background-color: var(--preset--color--accent-2);
   }
 `;
 
@@ -80,11 +126,14 @@ const SearchResultList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+
+  & a {
+    text-decoration: unset;
+  }
 `;
 
 const SearchResultItem = styled.li`
   display: flex;
-  flex-direction: column;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -95,6 +144,18 @@ const SearchResultItem = styled.li`
 
   &:hover {
     background-color: #f9f9f9;
+  }
+
+  & a {
+    flex: 1;
+  }
+`;
+
+const BookMarkIcon = styled.img`
+  cursor: pointer;
+
+  &.on {
+    background-image: url("/bookmark-on.png");
   }
 `;
 
@@ -107,6 +168,7 @@ const PostTitle = styled.h2`
 const PostMeta = styled.div`
   font-size: 14px;
   color: #777;
+  text-decoration: none;
 `;
 
 const posts = [
@@ -127,39 +189,72 @@ const posts = [
   },
 ];
 
-const SearchResults = () => (
-  <SearchResultList>
-    {posts.map((post) => (
-      <Link key={post.id} to={`/search/post/${post.id}`}>
-        <SearchResultItem>
-          <PostTitle>{post.title}</PostTitle>
-          <PostMeta>{post.date}</PostMeta>
-        </SearchResultItem>
-      </Link>
-    ))}
-  </SearchResultList>
-);
+const SearchResults = () => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState('정확도순');
+
+  const toggleFilter = () => setIsFilterOpen(!isFilterOpen);
+
+  const selectFilter = (filter) => {
+    setSelectedFilter(filter);
+    setIsFilterOpen(false);
+  };
+
+  return (
+  <SearchContainer>
+    <Sidebar />
+    <MainContent>
+      <SearchWrapper>
+        <SearchHeader>
+          <SearchBox>
+            <Input type="text" placeholder="검색" />
+            <Button>검색</Button>
+          </SearchBox>
+          <FilterButton>
+            <FilterButtonStyled
+              className={`btn-select ${isFilterOpen ? 'click' : ''}`}
+              onClick={toggleFilter}
+            >
+              {selectedFilter}
+            </FilterButtonStyled>
+            <FilterList isOpen={isFilterOpen} className="list-member">
+              <FilterListItem>
+                <FilterListItemButton onClick={() => selectFilter('정확도순')}>정확도순</FilterListItemButton>
+              </FilterListItem>
+              <FilterListItem>
+                <FilterListItemButton onClick={() => selectFilter('최신순')}>최신순</FilterListItemButton>
+              </FilterListItem>
+              <FilterListItem>
+                <FilterListItemButton onClick={() => selectFilter('오래된순')}>오래된순</FilterListItemButton>
+              </FilterListItem>
+            </FilterList>
+          </FilterButton>
+        </SearchHeader>
+        <SearchResultList>
+          {posts.map((post) => (
+            <SearchResultItem key={post.id}>
+              <Link to={`/search/post/${post.id}`}>
+                <PostTitle>{post.title}</PostTitle>
+                <PostMeta>{post.date}</PostMeta>
+              </Link>
+              <BookMarkIcon width="40px" height="40px" src="/bookmark.png" />
+            </SearchResultItem>
+          ))}
+        </SearchResultList>
+      </SearchWrapper>
+    </MainContent>
+  </SearchContainer>
+  );
+};
 
 const Search = () => {
   return (
     <Container>
-      <Sidebar />
-      <MainContent>
-        <SearchWrapper>
-          <SearchHeader>
-            <SearchBox>
-              <Input type="text" placeholder="검색" />
-              <Button>검색</Button>
-            </SearchBox>
-            <FilterButton>정확도 순▼</FilterButton>
-          </SearchHeader>
-          <Routes>
-            <Route path="/" element={<SearchResults />} />
-            <Route path="post/:postId" element={<SearchSinglePost />} />
-            <Route path="post/:postId/comment/:commentId" element={<SearchPostComment />} />
-          </Routes>
-        </SearchWrapper>
-      </MainContent>
+      <Routes>
+        <Route path="/" element={<SearchResults />} />
+        <Route path="post/:postId" element={<SearchSinglePost />} />
+        <Route path="post/:postId/comment/:commentId" element={<SearchPostComment />} />
+      </Routes>
     </Container>
   );
 };

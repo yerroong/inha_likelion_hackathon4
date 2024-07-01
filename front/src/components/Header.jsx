@@ -72,7 +72,7 @@ const Header = () => {
     <HeaderContainer className={path || "main"}>
       <Logo>
         <Link to="/">
-          <img src="logo.png" alt="Logo" />
+          <img src="/logo.png" alt="Logo" />
         </Link>
       </Logo>
       <Navigation>
