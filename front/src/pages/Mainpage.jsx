@@ -6,7 +6,8 @@ const MContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin-left: 15%;
+  margin: 0 auto; /* Center horizontally */
+  align-items: center; /* Center child elements horizontally */
 `;
 
 const ContentContainer = styled.div`
@@ -48,13 +49,14 @@ const PostsContainerWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1000px; /* Adjust as needed */
+  width: 100%;
+  max-width: 1000px;
   margin: 0 auto; /* Center horizontally */
 `;
 
 const PostsContainer = styled.div`
-  width: 1000px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1000px;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
@@ -108,6 +110,7 @@ const PostDescription = styled.p`
 const MoreButtonContainer = styled.div`
   margin-top: 20px;
   text-align: center;
+  width: 100%; /* Ensure it takes up full width */
 `;
 
 const MoreButton = styled.button`
