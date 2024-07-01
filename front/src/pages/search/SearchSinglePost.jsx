@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -118,7 +117,6 @@ const CommentButtonWrap = styled.div`
 `;
 
 const SearchSinglePost = () => {
-  const { postId } = useParams();
 
   return (
     <>

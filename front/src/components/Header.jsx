@@ -84,7 +84,7 @@ const Header = () => {
           </li>
           <li>
             <a href="/search" className={path === "/search" ? "active" : ""}>
-              <img src="/search_icon.png" />찾기
+              <img alt="search icon" src="/search_icon.png" />찾기
             </a>
           </li>
           <li>
