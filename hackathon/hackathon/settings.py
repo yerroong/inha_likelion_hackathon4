@@ -11,28 +11,60 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+from django.core.exceptions import ImproperlyConfigured
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+secret_file = BASE_DIR / 'secrets.json'
+
+with open(secret_file) as file:
+    secrets = json.loads(file.read())
+
+def get_secret(setting,secrets_dict = secrets):
+    try:
+        return secrets_dict[setting]
+    except KeyError:
+        error_msg = f'Set the {setting} environment variable'
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_secret('SECRET_KEY') 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&-&jij!b%j59-gwuk=3tnrow3n84=rj7-*t-(qh(o26#+q%3re'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.37.219.221','bojblog.kro.kr']
+ALLOWED_HOSTS = ['3.37.219.221','bojblog.kro.kr','127.0.0.1']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    # my app
     'blog',
+    'users',
+    # third-party
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+
+    # basic app
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'hackathon.urls'
@@ -104,8 +137,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
+
+SITE_ID = 1
 
 LANGUAGE_CODE = 'ko-kr'
 
@@ -125,3 +158,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # 인증된 요청인지 확인
+        #'rest_framework.permissions.AllowAny',  # 누구나 접근 가능 
+				# (기본적으로 누구나 접근 가능하게 설정하고, 인증된 요청인지 확인하는 api를 따로 지정하게 하려면 
+				# 이 옵션을 위의 옵션 대신 켜주어도 됩니다!)
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT를 통한 인증방식 사용
+    ),
+}
+
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    'SIGNING_KEY': 'hellolikelionhellolikelion',
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None # username 필드 사용 x
+ACCOUNT_EMAIL_REQUIRED = True            # email 필드 사용 o
+ACCOUNT_USERNAME_REQUIRED = False        # username 필드 사용 x
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
