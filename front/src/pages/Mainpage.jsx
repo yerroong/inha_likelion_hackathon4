@@ -6,8 +6,8 @@ const MContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  margin: 0 auto; /* Center horizontally */
-  align-items: center; /* Center child elements horizontally */
+  margin: 0 auto;
+  align-items: center;
 `;
 
 const ContentContainer = styled.div`
@@ -51,7 +51,7 @@ const PostsContainerWrapper = styled.div`
   align-items: center;
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto; /* Center horizontally */
+  margin: 0 auto;
 `;
 
 const PostsContainer = styled.div`
@@ -61,8 +61,8 @@ const PostsContainer = styled.div`
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 10px;
-  background-color: #FBFDFF; /* Background color */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+  background-color: #FBFDFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const Post = styled.h2`
@@ -110,7 +110,7 @@ const PostDescription = styled.p`
 const MoreButtonContainer = styled.div`
   margin-top: 20px;
   text-align: center;
-  width: 100%; /* Ensure it takes up full width */
+  width: 100%;
 `;
 
 const MoreButton = styled.button`
@@ -145,7 +145,7 @@ const MainPage = () => {
   const navigate = useNavigate();
 
   const handleFindMoreClick = () => {
-    navigate('/finding');
+    navigate('/Search');
   };
 
   return (
