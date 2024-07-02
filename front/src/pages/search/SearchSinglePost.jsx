@@ -112,6 +112,7 @@ const CommentButtonWrap = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
     & img {
       width: 25px;
       height: 25px;
