@@ -13,7 +13,6 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
   position: relative;
@@ -39,7 +38,6 @@ const CommentCount = styled.h1`
 `;
 
 const CommentList = styled.div`
-  border-top: 1px solid #ccc;
 `;
 
 const CommentItem = styled.div`
