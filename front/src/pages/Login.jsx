@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from "react";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -8,6 +8,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+`;
+
+const TitleWrap = styled.div`
+position: relative;
+    display: flex;
+    align-items: center;
+    width: 300px;
+    justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -20,19 +28,19 @@ const Subtitle = styled.p`
 `;
 
 const Button = styled.button`
-    width: 300px;
-    height: 55px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: white;
-    cursor: pointer;
-    font-size: 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  width: 300px;
+  height: 55px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
   &:hover {
     background-color: #f0f0f0;
@@ -97,24 +105,38 @@ const RegisterLink = styled(Link)`
   }
 `;
 
+const BackButton = styled(Link)`
+  font-size: 24px;
+  text-decoration: none;
+  color: black;
+  position: absolute;
+  left: 15px;
+  cursor: pointer;
+`;
+
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
-      <Title>로그인하기</Title>
+      <TitleWrap>
+        <BackButton onClick={() => navigate(-1)}>←</BackButton>
+        <Title>로그인하기</Title>
+      </TitleWrap>
       <Subtitle>소셜 아이디 및 이메일로 로그인할 수 있어요.</Subtitle>
       <EmailLoginButton to="/login/email-login">
         이메일로 로그인하기
         <img src="/email.png" alt="Email" />
       </EmailLoginButton>
-      <Button className='google-login-btn'>
+      <Button className="google-login-btn">
         <img src="/google-logo.png" alt="Google" />
         Google로 시작하기
       </Button>
-      <Button className='kakao-login-btn'>
+      <Button className="kakao-login-btn">
         <img src="/kakao-logo.png" alt="Kakao" />
         카카오로 시작하기
       </Button>
-      <Button className='naver-login-btn'>
+      <Button className="naver-login-btn">
         <img src="/naver-logo.png" alt="Naver" />
         네이버로 시작하기
       </Button>

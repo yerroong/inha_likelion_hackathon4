@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -7,6 +8,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+`;
+
+const TitleWrap = styled.div`
+position: relative;
+    display: flex;
+    align-items: center;
+    width: 300px;
+    justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -44,9 +53,19 @@ const Button = styled.button`
   }
 `;
 
+const BackButton = styled(Link)`
+  font-size: 24px;
+  text-decoration: none;
+  color: black;
+  position: absolute;
+  left: 15px;
+  cursor: pointer;
+`;
+
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,7 +74,10 @@ const RegisterForm = () => {
 
   return (
     <Container>
-      <Title>회원가입</Title>
+      <TitleWrap>
+        <BackButton onClick={() => navigate(-1)}>←</BackButton>
+        <Title>회원가입</Title>
+      </TitleWrap>
       <Form onSubmit={handleSubmit}>
         <Input
           type="email"
