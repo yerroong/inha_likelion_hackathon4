@@ -132,7 +132,7 @@ const comments = [
   { id: 4, author: '아무개왈4', content: '좋은 글 감사합니다!', date: '24.00.00(업로드일)' },
 ];
 
-const SearchPostComment = () => {
+const PostComment = () => {
   const { postId } = useParams();
   const [isCommentFormOpen, setIsCommentFormOpen] = useState(false);
 
@@ -168,4 +168,4 @@ const SearchPostComment = () => {
   );
 };
 
-export default SearchPostComment;
+export default PostComment;

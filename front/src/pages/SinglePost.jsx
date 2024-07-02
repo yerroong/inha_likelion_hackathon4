@@ -122,7 +122,7 @@ const CommentButtonWrap = styled.div`
     }
 `;
 
-const SearchSinglePost = () => {
+const SinglePost = () => {
   const { postId } = useParams();
 
   const navigate = useNavigate();
@@ -169,4 +169,4 @@ const SearchSinglePost = () => {
   );
 };
 
-export default SearchSinglePost;
+export default SinglePost;
