@@ -5,7 +5,7 @@ import MainPage from './pages/Mainpage';
 import Posting from './pages/Posting';
 import Search from './pages/search/Search';
 import MyPage from './pages/mypage/Mypage';
-import SearchSinglePost from './pages/SinglePost';
+import SinglePost from './pages/SinglePost';
 
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/posting" element={<Posting />}  />
           <Route path="/search/*" element={<Search />} />
-          <Route path="/post/*" element={<SearchSinglePost />} />
+          <Route path="/post/*" element={<SinglePost />} />
           <Route path="/posting" />
           <Route path="/mypage" element={<MyPage/>} />
         </Routes>
