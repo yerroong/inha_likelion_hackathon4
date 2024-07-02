@@ -7,6 +7,9 @@ import Search from './pages/search/Search';
 import MyPage from './pages/mypage/Mypage';
 import SinglePost from './pages/SinglePost';
 import PostComment from './pages/PostComment';
+import Login from './pages/Login';
+import EmailLogin from './pages/EmailLogin';
+import Signup from './pages/Signup';
 
 
 const App = () => {
@@ -22,6 +25,9 @@ const App = () => {
           <Route path="/post/:postId/comments" element={<PostComment />} />
           <Route path="/posting" />
           <Route path="/mypage" element={<MyPage/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/email-login" element={<EmailLogin />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
     </Router>
