@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MContainer = styled.div`
   display: flex;
@@ -90,7 +90,7 @@ const PostItem = styled.li`
   margin-bottom: 20px;
 `;
 
-const PostLink = styled.a`
+const PostLink = styled(Link)`
   text-decoration: none;
   color: #000;
 
@@ -141,13 +141,25 @@ const SortButton = styled.button`
   }
 `;
 
+const posts = [
+  {
+    id: 1,
+    title: '[C] 백준 1002번 터렛 - 초보 개발자의 이야기, 깃허브',
+    date: '2021. 8. 3',
+  },
+  {
+    id: 2,
+    title: '[C] 백준 1002번 터렛 - 초보 개발자의 이야기, 깃허브',
+    date: '2021. 8. 3',
+  },
+];
+
 const MainPage = () => {
   const navigate = useNavigate();
 
-  const handleFindMoreClick = () => {
+  const handleClick = () => {
     navigate('/Search');
   };
-
   return (
     <MContainer>
       <ContentContainer>
@@ -169,23 +181,19 @@ const MainPage = () => {
               <SortButton>추천순 ▼</SortButton>
             </PostsHeader>
             {/* 일단 예시임 */}
-            <PostList> 
-              <PostItem>
-                <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
-                  <PostTitle>[백준 알고리즘 1002번] 터렛 C언어 - 나그네의 발자취 - 티스토리</PostTitle>
-                </PostLink>
-                <PostDescription>2020.4.7 - 문제와 테스트 케이스</PostDescription>
-              </PostItem>
-              <PostItem>
-                <PostLink href="https://www.acmicpc.net/problem/1002" target="_blank" rel="noopener noreferrer">
-                  <PostTitle>[C] 백준 1002번 터렛 - 초보 개발자의 이야기, 리하트 - 티스토리</PostTitle>
-                </PostLink>
-                <PostDescription>2020.1.3 - 터렛 각 테스트 케이스</PostDescription>
-              </PostItem>
+            <PostList>
+              {posts.map((post) => (
+                <PostItem key={post.id}>
+                  <PostLink to={`/post/${post.id}`}>
+                    <PostTitle>{post.title}</PostTitle>
+                  </PostLink>
+                  <PostDescription>{post.date}</PostDescription>
+                </PostItem>
+              ))}
             </PostList>
           </PostsContainer>
           <MoreButtonContainer>
-            <MoreButton onClick={handleFindMoreClick}>더 많은 글 찾으러가기</MoreButton>
+            <MoreButton onClick={handleClick}>더 많은 글 찾으러가기</MoreButton>
           </MoreButtonContainer>
         </PostsContainerWrapper>
       </ContentContainer>
