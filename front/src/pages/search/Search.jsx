@@ -233,7 +233,7 @@ const SearchResults = () => {
         <SearchResultList>
           {posts.map((post) => (
             <SearchResultItem key={post.id}>
-              <Link to={`/search/post/${post.id}`}>
+              <Link to={`/post/${post.id}`}>
                 <PostTitle>{post.title}</PostTitle>
                 <PostMeta>{post.date}</PostMeta>
               </Link>
@@ -252,8 +252,8 @@ const Search = () => {
     <Container>
       <Routes>
         <Route path="/" element={<SearchResults />} />
-        <Route path="post/:postId" element={<SinglePost />} />
-        <Route path="post/:postId/comments" element={<PostComment />} />
+        <Route path="/post/:postId" element={<SinglePost />} />
+        <Route path="/post/:postId/comments" element={<PostComment />} />
       </Routes>
     </Container>
   );

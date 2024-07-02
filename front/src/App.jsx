@@ -6,6 +6,7 @@ import Posting from './pages/Posting';
 import Search from './pages/search/Search';
 import MyPage from './pages/mypage/Mypage';
 import SinglePost from './pages/SinglePost';
+import PostComment from './pages/PostComment';
 
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
           <Route path="/" element={<MainPage />} />
           <Route path="/posting" element={<Posting />}  />
           <Route path="/search/*" element={<Search />} />
-          <Route path="/post/*" element={<SinglePost />} />
+          <Route path="/post/:postId" element={<SinglePost />} />
+          <Route path="/post/:postId/comments" element={<PostComment />} />
           <Route path="/posting" />
           <Route path="/mypage" element={<MyPage/>} />
         </Routes>
