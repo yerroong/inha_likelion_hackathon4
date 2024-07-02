@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar'; 
+import Sidebar from '../components/Sidebar';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import hljs from 'highlight.js/lib/core';
+import 'highlight.js/styles/github.css';
+import javascript from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
+import xml from 'highlight.js/lib/languages/xml';
+
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('python', python);
+hljs.registerLanguage('xml', xml);
 
 const Container = styled.div`
   max-width: 1200px;
@@ -43,12 +54,10 @@ const Input = styled.input`
   border-radius: 5px;
 `;
 
-const TextArea = styled.textarea`
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  height: 200px;
+const QuillWrapper = styled.div`
+  .ql-editor {
+    min-height: 300px;  /* 기본 높이 설정 */
+  }
 `;
 
 const FileInput = styled.input`
@@ -82,6 +91,28 @@ const ToggleButton = styled(Button)`
     background-color: ${({ active }) => (active ? '#0056b3' : '#bbb')};
   }
 `;
+
+const modules = {
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+  },
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+    ['link', 'image', 'video'],
+    ['clean'],
+    ['code-block'],
+  ],
+};
+
+const formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video', 'code-block'
+];
 
 const Posting = () => {
   const [isPublic, setIsPublic] = useState(true);
@@ -133,12 +164,14 @@ const Posting = () => {
                 required
               />
               <Label htmlFor="content">내용을 입력해 주세요.</Label>
-              <TextArea
-                id="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
-              />
+              <QuillWrapper>
+                <ReactQuill
+                  value={content}
+                  onChange={setContent}
+                  modules={modules}
+                  formats={formats}
+                />
+              </QuillWrapper>
               <FileInput type="file" onChange={handleFileChange} />
               <ButtonContainer>
                 <ToggleButton

@@ -88,12 +88,14 @@ const PostItem = styled.li`
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 20px;
+  display: flex; /* Flexbox로 설정하여 요소들을 가로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: space-between; /* 요소들 사이의 간격을 최대화 */
 `;
 
 const PostLink = styled(Link)`
   text-decoration: none;
   color: #000;
-
   &:hover {
     text-decoration: underline;
   }
@@ -102,6 +104,7 @@ const PostLink = styled(Link)`
 const PostTitle = styled.h3`
   margin: 0;
 `;
+
 
 const PostDescription = styled.p`
   margin: 5px 0 0 0;
@@ -138,6 +141,16 @@ const SortButton = styled.button`
 
   &:hover {
     background-color: #ddd;
+  }
+`;
+
+const BookMarkIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-left: 130px;
+  &.on {
+    background-image: url("/bookmark-on.png");
   }
 `;
 
@@ -188,6 +201,7 @@ const MainPage = () => {
                     <PostTitle>{post.title}</PostTitle>
                   </PostLink>
                   <PostDescription>{post.date}</PostDescription>
+                  <BookMarkIcon src="/bookmark.png" />
                 </PostItem>
               ))}
             </PostList>

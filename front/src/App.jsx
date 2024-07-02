@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
-import MainPage from './pages/Mainpage';
+import MainPage from './pages/Main';
 import Posting from './pages/Posting';
 import Search from './pages/search/Search';
 import MyPage from './pages/mypage/Mypage';
