@@ -142,7 +142,7 @@ const SinglePost = () => {
   return (
     <>
       <Container>
-        <BackButton to={`/post/${postId}`}>←</BackButton>
+        <BackButton onClick={() => navigate(-1)}>←</BackButton>
         <PostHeader>
           <AuthorProfileImg />
           <PostTitleWrap>
