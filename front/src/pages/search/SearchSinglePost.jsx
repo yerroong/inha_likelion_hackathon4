@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  max-width: 800px;
+  margin: auto;
   padding: 20px;
   background-color: var(--preset--color--base-2);
   border-radius: 5px;
