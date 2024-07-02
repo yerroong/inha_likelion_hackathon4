@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchSinglePost from './SearchSinglePost';
-import SearchPostComment from './SearchPostComment';
+import SearchSinglePost from '../SinglePost';
+import SearchPostComment from '../PostComment';
 import Sidebar from '../../components/Sidebar';
 
 const Container = styled.div`
