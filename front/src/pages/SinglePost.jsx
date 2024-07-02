@@ -22,6 +22,13 @@ const PostHeader = styled.div`
   padding-bottom: 10px;
   border-bottom: 1px solid var(--preset--color--contrast);
   margin-bottom: 20px;
+  margin-top: 20px;
+`;
+
+const BackButton = styled(Link)`
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
 `;
 
 const AuthorProfileImg = styled.img`
@@ -135,6 +142,7 @@ const SinglePost = () => {
   return (
     <>
       <Container>
+        <BackButton to={`/post/${postId}`}>←</BackButton>
         <PostHeader>
           <AuthorProfileImg />
           <PostTitleWrap>
