@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchSinglePost from '../SinglePost';
-import SearchPostComment from '../PostComment';
+import SinglePost from '../SinglePost';
+import PostComment from '../PostComment';
 import Sidebar from '../../components/Sidebar';
 
 const Container = styled.div`
@@ -233,7 +233,7 @@ const SearchResults = () => {
         <SearchResultList>
           {posts.map((post) => (
             <SearchResultItem key={post.id}>
-              <Link to={`/search/post/${post.id}`}>
+              <Link to={`/post/${post.id}`}>
                 <PostTitle>{post.title}</PostTitle>
                 <PostMeta>{post.date}</PostMeta>
               </Link>
@@ -252,8 +252,8 @@ const Search = () => {
     <Container>
       <Routes>
         <Route path="/" element={<SearchResults />} />
-        <Route path="post/:postId" element={<SearchSinglePost />} />
-        <Route path="post/:postId/comments" element={<SearchPostComment />} />
+        <Route path="/post/:postId" element={<SinglePost />} />
+        <Route path="/post/:postId/comments" element={<PostComment />} />
       </Routes>
     </Container>
   );

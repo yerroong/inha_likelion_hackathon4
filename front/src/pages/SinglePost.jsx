@@ -128,7 +128,7 @@ const SinglePost = () => {
   const navigate = useNavigate();
 
   const handleCommentClick = () => {
-    navigate(`/search/post/${postId}/comments`); // 적절한 postId와 commentId로 수정하세요.
+    navigate(`/post/${postId}/comments`); // 적절한 postId와 commentId로 수정하세요.
   };
 
   return (

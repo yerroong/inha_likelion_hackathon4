@@ -143,9 +143,9 @@ const PostComment = () => {
   return (
     <Container>
       <Header>
-        <BackButton to={`/search/post/${postId}`}>←</BackButton>
+        <BackButton to={`/post/${postId}`}>←</BackButton>
         <CommentCount>댓글 <span>12</span></CommentCount>
-        <Link to={`/search/post/${postId}`}><button>본문 가기</button></Link>
+        <Link to={`/post/${postId}`}><button>본문 가기</button></Link>
       </Header>
       <CommentList>
         {comments.map((comment) => (
