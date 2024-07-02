@@ -40,7 +40,7 @@ const Button = styled.button`
   }
 `;
 
-const Signup = () => {
+const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -72,4 +72,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default RegisterForm;

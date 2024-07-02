@@ -9,7 +9,7 @@ import SinglePost from './pages/SinglePost';
 import PostComment from './pages/PostComment';
 import Login from './pages/Login';
 import EmailLogin from './pages/EmailLogin';
-import Signup from './pages/Signup';
+import RegisterForm from './pages/RegisterForm';
 
 
 const App = () => {
@@ -26,8 +26,8 @@ const App = () => {
           <Route path="/posting" />
           <Route path="/mypage" element={<MyPage/>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/email-login" element={<EmailLogin />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/login/email-login" element={<EmailLogin />} />
+          <Route path="/registerform" element={<RegisterForm />} />
         </Routes>
       </main>
     </Router>

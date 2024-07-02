@@ -72,9 +72,28 @@ const EmailLoginButton = styled(Link)`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  position: relative;
 
   &:hover {
     background-color: #f0f0f0;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 30px;
+  }
+`;
+
+const RegisterLink = styled(Link)`
+  margin-top: 20px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -83,8 +102,9 @@ const Login = () => {
     <Container>
       <Title>로그인하기</Title>
       <Subtitle>소셜 아이디 및 이메일로 로그인할 수 있어요.</Subtitle>
-      <EmailLoginButton to="/email-login">
+      <EmailLoginButton to="/login/email-login">
         이메일로 로그인하기
+        <img src="/email.png" alt="Email" />
       </EmailLoginButton>
       <Button className='google-login-btn'>
         <img src="/google-logo.png" alt="Google" />
@@ -98,6 +118,7 @@ const Login = () => {
         <img src="/naver-logo.png" alt="Naver" />
         네이버로 시작하기
       </Button>
+      <RegisterLink to="/registerform">회원가입하기</RegisterLink>
     </Container>
   );
 };
