@@ -9,6 +9,10 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+const Title = styled.h1`
+  margin-bottom: 20px;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -51,6 +55,7 @@ const RegisterForm = () => {
 
   return (
     <Container>
+      <Title>회원가입</Title>
       <Form onSubmit={handleSubmit}>
         <Input
           type="email"
