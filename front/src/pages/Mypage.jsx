@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import SinglePost from './SinglePost';
 
 const ProfileContainer = styled.div`
     height:80vh;
@@ -24,7 +22,6 @@ const ProfileCardContainer = styled.div`
     border-radius: 30px;
     background-color: #FBFDFF;
     margin-top: 30px;
-    /* box-shadow: 0px 1px 8px 0px #888; */
 `;
 const ProfileBox = styled.div`
     display: flex;
@@ -41,7 +38,6 @@ const ProfileImg = styled.img`
     width: 200px;
     height: 200px;
     object-fit: cover;
-    /* background-image: ${props => (props.image ? `url(${props.image})` : 'none')}; */
 `;
 const ImgButton = styled.button`
     width: 70px;
@@ -114,13 +110,17 @@ const UserState = styled.p`
 `;
 const BookMarkBox = styled.div`
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    margin: 30px;
+    height: 300px;
+    overflow-y: auto;
 `;
+const ContentsList = styled.div`
+    
+`
 const ButtonBox2 = styled.div`
     display: flex;
     align-items: flex-start;
-    margin: 30px;
-    height: 300px;
 `;
 const BookMarkButton = styled.button`
     width: 150px;
@@ -129,7 +129,7 @@ const BookMarkButton = styled.button`
     border-radius: 10px 0px 0px 10px;
     border-style: none;
     font-size: 15px;
-    background-color: #C7CBD1;
+    background-color: ${props => (props.isActive ? '#90A5CD' : '#C7CBD1')};
     color: white;
     cursor: pointer;
     box-shadow: 0px 1px 5px 0px #888;
@@ -145,7 +145,7 @@ const CommentButton = styled.button`
     border-radius: 0px 10px 10px 0px;
     border-style: none;
     font-size: 15px;
-    background-color: #C7CBD1;
+    background-color: ${props => (props.isActive ? '#90A5CD' : '#C7CBD1')};
     color: white;
     cursor: pointer;
     box-shadow: 0px 1px 5px 0px #888;
@@ -158,7 +158,6 @@ const PostContainer = styled.div`
     margin: 30px;
     margin-left: 100px;
     margin-right: 0;
-    cursor: pointer;
 `;
 const PostContainerTitle = styled.p`
     display :inline-block;
@@ -175,6 +174,7 @@ const PostCardBox = styled.div`
 const PostCardTitle = styled.h2`
     font-weight: bold;
     margin: 0;
+    cursor: pointer;
 `;
 const PostCardDate = styled.p`
     margin: 0;
@@ -190,15 +190,26 @@ const UserNameInput = styled.input`
     width: 90px;
     word-wrap: break-word;
 `;
-const PhotoInput = styled.input`
-  margin-bottom: 20px;
-`;
 const MyPage = () => {
     const [MyPosts, setMyPosts] = useState([
-        { id: 1, title: '내가 작성한 게시물 제목', date: '24.00.00' },
-        { id: 2, title: '내가 작성한 게시물 제목', date: '24.00.00' },
-        { id: 3, title: '내가 작성한 게시물 제목', date: '24.00.00' },  
+        { id: 1, title: '내가 작성한 게시물 제목1', date: '24.00.00' },
+        { id: 2, title: '내가 작성한 게시물 제목2', date: '24.00.00' },
+        { id: 3, title: '내가 작성한 게시물 제목3', date: '24.00.00' },  
     ]);
+
+    const [MyBookMark, setMyBookMark] = useState([
+        { id: 1, title: '북마크한 게시물1', date: '24.00.00' },
+        { id: 2, title: '북마크한 게시물2', date: '24.00.00' },
+        { id: 3, title: '북마크한 게시물3', date: '24.00.00' },
+    ]);
+
+    const [MyComment, setMyComment] = useState([
+        { id: 1, title: '댓글 작성한 게시물1', text: '안녕하세요~', date: '24.00.00' },
+        { id: 2, title: '댓글 작성한 게시물2', text: '글 잘보고 갑니다 뭐 어쩌고 저쩌고 내용은 이해가 잘 안가요', date: '24.00.00' },
+        { id: 3, title: '댓글 작성한 게시물3', text: '브2!', date: '24.00.00' },
+    ]);
+
+    const [activeTab, setActiveTab] = useState('posts');
 
     const navigate = useNavigate();
 
@@ -209,16 +220,38 @@ const MyPage = () => {
 
     useEffect(() => {
         axios
-          .get(' ')
+          .get('내가 작성한 게시물')
           .then(res => {
             setMyPosts(res.data);
           })
           .catch(e => {
             console.log(e);
           });
-      }, []);  
+    }, []);  
 
-      const handlePostClick = (postId) => {
+    useEffect(() => {
+        axios
+          .get('북마크한 게시물')
+          .then(res => {
+            setMyBookMark(res.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    }, []);  
+
+    useEffect(() => {
+        axios
+          .get('작성한 댓글')
+          .then(res => {
+            setMyComment(res.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+    }, []);  
+
+    const handlePostClick = (postId) => {
         navigate(`/Post/${postId}`);
     };
 
@@ -230,22 +263,26 @@ const MyPage = () => {
         setUserName(newUserName);
         setIsEditing(false);
     };
-   
+
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedImage(URL.createObjectURL(file));
     };
+
     const handleButtonClick = () => {
         document.getElementById('file').click();
     };
 
-    return (
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    };
 
-    <ProfileContainer>
-    <ProfileCardContainer>
-    <ProfileBox>
-        <ImgBox>
-        <ProfileImg src={selectedImage} alt=" " />
+    return (
+        <ProfileContainer>
+            <ProfileCardContainer>
+                <ProfileBox>
+                    <ImgBox>
+                        <ProfileImg src={selectedImage} alt=" " />
                         <ImgButton onClick={handleButtonClick}>사진 수정</ImgButton>
                         <HiddenFileInput
                             type="file"
@@ -253,47 +290,69 @@ const MyPage = () => {
                             accept="image/*"
                             onChange={handleFileChange}
                         />
-        </ImgBox>
-        <TextBox>
-        <NameBox>
-                <ButtonBox>
-                 {isEditing ? (
-                    <UserNameInput 
-                    value={newUserName} onChange={(e) => setNewUserName(e.target.value)}/>
-                            ) : ( <UserName>{userName}</UserName>)}
-                
-                    {isEditing ? (
-                    <NameBuuton2 onClick={handleSaveClick}>완료</NameBuuton2>
+                    </ImgBox>
+                    <TextBox>
+                        <NameBox>
+                            <ButtonBox>
+                                {isEditing ? (
+                                    <UserNameInput 
+                                    value={newUserName} onChange={(e) => setNewUserName(e.target.value)}/>
+                                ) : ( <UserName>{userName}</UserName>)}
+                                {isEditing ? (
+                                    <NameBuuton2 onClick={handleSaveClick}>완료</NameBuuton2>
                                 ) : ( <NameButton1 onClick={handleEditClick}>수정</NameButton1> )}
-                </ButtonBox>
-        </NameBox>
-        <UserEmail>example@gmail.com</UserEmail>
-        <UserState>글 작성 : 20회</UserState>
-        <UserState>댓글 작성 : 20회</UserState>
-        </TextBox>
-    </ProfileBox>
-    <BookMarkBox>
-        <ButtonBox2>
-            <BookMarkButton>북마크한 글</BookMarkButton>
-            <CommentButton>내가 쓴 댓글</CommentButton>
-        </ButtonBox2>   
-    </BookMarkBox>
-    </ProfileCardContainer>
-    <PostContainer>
-        <PostContainerTitle>내가 쓴 글 살펴보기</PostContainerTitle>
-        {/* <PostCardBox>
-            <PostCardTitle>내가 작성한 글</PostCardTitle>
-            <PostCardDate>24.00.0</PostCardDate> */}
-            {MyPosts.map( post => (
-          <PostCardBox 
-          key={post.id} onClick={() => handlePostClick(post.id)}>
-            <PostCardTitle>{post.title}</PostCardTitle> 
-            <PostCardDate>{post.date}</PostCardDate>
-            </PostCardBox>
-        ))}
-        {/* </PostCardBox> */}
-    </PostContainer>
-    </ProfileContainer>
+                            </ButtonBox>
+                        </NameBox>
+                        <UserEmail>example@gmail.com</UserEmail>
+                        <UserState>글 작성 : 20회</UserState>
+                        <UserState>댓글 작성 : 20회</UserState>
+                    </TextBox>
+                </ProfileBox>
+                <BookMarkBox>
+                    <ButtonBox2>
+                        <BookMarkButton 
+                            isActive={activeTab === 'bookmarks'} onClick={() => handleTabClick('bookmarks')}>
+                            북마크한 글
+                        </BookMarkButton>
+                        <CommentButton 
+                            isActive={activeTab === 'comments'} onClick={() => handleTabClick('comments')}>
+                            내가 쓴 댓글
+                        </CommentButton>
+                    </ButtonBox2>
+                    {activeTab === 'bookmarks' && (
+                        <ContentsList>
+                            {MyBookMark.map((post) => (
+                                <PostCardBox key={post.id} onClick={() => handlePostClick(post.id)}>
+                                    <p>{post.title}</p>
+                                    <p>{post.date}</p>
+                                </PostCardBox>
+                            ))}
+                        </ContentsList>
+                    )}
+                    {activeTab === 'comments' && (
+                        <ContentsList>
+                            {MyComment.map((comment) => (
+                                <PostCardBox key={comment.id} onClick={() => handlePostClick(comment.id)}>
+                                    <p>{comment.title}</p>
+                                    <p>{comment.text}</p>
+                                    <p>{comment.date}</p>
+                                </PostCardBox>
+                            ))}
+                        </ContentsList>
+                    )}
+                </BookMarkBox>
+            </ProfileCardContainer>
+            <PostContainer>
+                <PostContainerTitle>내가 쓴 글 살펴보기</PostContainerTitle>
+                {MyPosts.map(post => (
+                    <PostCardBox 
+                    key={post.id} onClick={() => handlePostClick(post.id)}>
+                        <PostCardTitle>{post.title}</PostCardTitle> 
+                        <PostCardDate>{post.date}</PostCardDate>
+                    </PostCardBox>
+                ))}
+            </PostContainer>
+        </ProfileContainer>
     );
 };
 
