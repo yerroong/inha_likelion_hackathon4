@@ -4,7 +4,7 @@ import Header from './components/Header';
 import MainPage from './pages/Main';
 import Posting from './pages/Posting';
 import Search from './pages/search/Search';
-import MyPage from './pages/mypage/Mypage';
+import MyPage from './pages/Mypage';
 import SinglePost from './pages/SinglePost';
 import PostComment from './pages/PostComment';
 import Login from './pages/Login';
