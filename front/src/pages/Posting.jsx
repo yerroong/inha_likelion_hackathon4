@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ReactQuill from 'react-quill';
@@ -13,6 +13,12 @@ import xml from 'highlight.js/lib/languages/xml';
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('xml', xml);
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    overflow: ${({ isDimmed }) => (isDimmed ? 'hidden' : 'auto')};
+  }
+`;
 
 const Container = styled.div`
   max-width: 1200px;
@@ -56,7 +62,7 @@ const Input = styled.input`
 
 const QuillWrapper = styled.div`
   .ql-editor {
-    min-height: 300px;  /* 기본 높이 설정 */
+    min-height: 300px;
   }
 `;
 
@@ -92,6 +98,44 @@ const ToggleButton = styled(Button)`
   }
 `;
 
+const DialogOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Dialog = styled.div`
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const DialogTitle = styled.h2`
+  margin-top: 0;
+`;
+
+const DialogButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+`;
+
+const DialogButton = styled(Button)`
+  background-color: #007BFF;
+  color: #fff;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
 const modules = {
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
@@ -115,11 +159,12 @@ const formats = [
 ];
 
 const Posting = () => {
-  const [isPublic, setIsPublic] = useState(true);
+  const [Public, setPublic] = useState(true);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -128,66 +173,107 @@ const Posting = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 글 등록 로직을 구현
-    console.log({
-      title,
-      category,
-      content,
-      file,
-      isPublic,
-    });
-    navigate('/');
+    setIsDialogVisible(true);
+  };
+
+  const handleDialogConfirm = async () => {
+    setIsDialogVisible(false);
+
+    try {
+      const formData = new FormData();
+      formData.append('post_title', title);
+      formData.append('content', content);
+      formData.append('number', category);
+      formData.append('public', Public);
+
+      if (file) {
+        formData.append('file', file);
+      }
+
+      const response = await fetch('백엔드 예시', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        navigate('/Posting');
+      } else {
+        console.error('포스트 등록 실패');
+      }
+    } catch (error) {
+      console.error('포스트 등록 에러:', error);
+    }
+  };
+
+  const handleDialogCancel = () => {
+    setIsDialogVisible(false);
   };
 
   return (
-    <Container>
-      <SubContainer>
-        <Sidebar />
-        <Content>
-          <PostContainer>
-            <h2>글쓰기</h2>
-            <Form onSubmit={handleSubmit}>
-              <Label htmlFor="title">제목을 입력해 주세요.</Label>
-              <Input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-              <Label htmlFor="category">카테고리 선택</Label>
-              <Input
-                type="text"
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-              />
-              <Label htmlFor="content">내용을 입력해 주세요.</Label>
-              <QuillWrapper>
-                <ReactQuill
-                  value={content}
-                  onChange={setContent}
-                  modules={modules}
-                  formats={formats}
+    <>
+      <GlobalStyle isDimmed={isDialogVisible} />
+      <Container>
+        <SubContainer>
+          <Sidebar />
+          <Content>
+            <PostContainer>
+              <h2>글쓰기</h2>
+              <Form onSubmit={handleSubmit}>
+                <Label htmlFor="title">제목을 입력해 주세요.</Label>
+                <Input
+                  type="text"
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
-              </QuillWrapper>
-              <FileInput type="file" onChange={handleFileChange} />
-              <ButtonContainer>
-                <ToggleButton
-                  type="button"
-                  active={isPublic}
-                  onClick={() => setIsPublic(!isPublic)}
-                >
-                  {isPublic ? '공개' : '비공개'}
-                </ToggleButton>
-                <Button type="submit">등록</Button>
-              </ButtonContainer>
-            </Form>
-          </PostContainer>
-        </Content>
-      </SubContainer>
-    </Container>
+                <Label htmlFor="category">카테고리 선택</Label>
+                <Input
+                  type="text"
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  required
+                />
+                <Label htmlFor="content">내용을 입력해 주세요.</Label>
+                <QuillWrapper>
+                  <ReactQuill
+                    value={content}
+                    onChange={setContent}
+                    modules={modules}
+                    formats={formats}
+                  />
+                </QuillWrapper>
+                <FileInput type="file" onChange={handleFileChange} />
+                <ButtonContainer>
+                  <ToggleButton
+                    type="button"
+                    active={Public}
+                    onClick={() => setPublic(!Public)}
+                  >
+                    {Public ? '공개' : '비공개'}
+                  </ToggleButton>
+                  <Button type="submit">등록</Button>
+                </ButtonContainer>
+              </Form>
+            </PostContainer>
+          </Content>
+        </SubContainer>
+      </Container>
+
+      {isDialogVisible && (
+        <DialogOverlay>
+          <Dialog>
+            <DialogTitle>상세정보</DialogTitle>
+            <p>글을 등록하시겠습니까?</p>
+            <DialogButtonContainer>
+              <DialogButton onClick={handleDialogConfirm}>확인</DialogButton>
+              <Button onClick={handleDialogCancel}>취소</Button>
+            </DialogButtonContainer>
+          </Dialog>
+        </DialogOverlay>
+      )}
+    </>
   );
 };
 
